@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estils/base.css">
+    <link rel="stylesheet" href="../estils/cuina.css">
+    <link rel="stylesheet" href="../estils/header.css">
+    <link rel="stylesheet" href="../estils/footer.css">
+    <link rel="stylesheet" href="../estils/modal.css">
+    <title>Cuina interactiva</title>
+    </head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+            <!-- Logo a la izquierda -->
+            <img src="../imatges/logo.png" alt="Logo" style="height: 40px;">
+    
+            <!-- Menú centrado -->
+            <nav style="flex-grow: 1; text-align: center;">
+                <a href="../inici.html">Inici</a>
+                <a href="../perfil.html">Perfil</a>
+                <a href="../contacte.html">Contacte</a>
+            </nav>
+    
+            <!-- Icono de cerrar sesión a la derecha -->
+            <a href="#" style="color: white; text-decoration: none; font-size: 20px;">
+                &#x274C; <!-- Icono de cerrar sesión -->
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="interactive-header">
+            <button class="exit-button">←</button>
+            <h2 class="recipe-title">Magdalenes + Brownies de xocolata</h2>
+        </div>
+        <div class="interactive-box">
+            <p id="step-description" class="step-description">Pas 1: Bat els ous amb unes varetes, amb moviments ràpids i envoltants.</p>
+            <div class="images-container">
+                <img id="step-image" src="../imatges/indicacions/batirHuevos.jpg" alt="Imatge batir ous" class="step-image">
+            </div>
+            <div id="timer-container" style="display: none; flex-direction: column; align-items: center; margin-top: 10px;">
+                <div id="timer" style="font-size: 32px; font-weight: bold; margin-bottom: 10px;">15:00</div>
+                <button id="timer-button"
+                    style="padding: 8px 16px; background-color: #FFF8F0; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: -5px;">
+                    Empezar
+                </button>
+            </div>            
+            <div class="navigation-buttons">
+                <button id="prev-button" class="prev-button">← Enrere</button>
+                <button id="next-button" class="next-button">Següent →</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; FHiC 2025 - Sense Fre A Les Magdalenes
+    </footer>
+
+    <div id="exit-modal" class="modal">
+        <p>Vols sortir de la preparació?</p>
+        <div style="margin-top: 20px;">
+            <button id="exit-yes-button">Sí</button>
+            <button id="exit-no-button">No</button>
+        </div>
+    </div>
+</body>
+
+<script src="../scripts/modalCooking.js"></script>
+
+<script src="../scripts/showCooking.js"></script>
+
+</html>

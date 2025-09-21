@@ -1,0 +1,86 @@
+
+.search-bar {
+    margin-top: 15px;
+    margin-bottom: 35px;
+    text-align: center;
+    position: relative;
+}
+
+.search-bar input {
+    width: 50%;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.search-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    max-width: 500px;
+}
+
+.search-wrapper input {
+    width: 100%;
+    padding: 12px 40px 12px 20px;
+    font-size: 16px;
+    border: 2px solid #FADADD;
+    border-radius: 25px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.search-wrapper input:focus {
+    outline: none;
+    border-color: #DFF5E3;
+    box-shadow: 0 0 10px rgba(223, 245, 227, 0.6);
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #F8BBD0;
+    pointer-events: none;
+}
+
+.recent-list {
+    position: absolute;
+    top: 50px;
+    left: 25%;
+    width: 50%;
+    background-color: #FFFFFF;
+    border: 1px solid #FADADD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+}
+
+.recent-list ul {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    text-align: left;
+}
+
+.recent-list ul li {
+    padding: 10px;
+    border-bottom: 1px solid #EEE;
+    cursor: pointer;
+}
+
+.recent-list ul li:hover {
+    background-color: #FADADD33;
+}
+
+.recent-list ul li a {
+    text-decoration: none;
+    color: #4A4A4A;
+    display: block;
+}
+
+.recent-list ul li a:hover {
+    background-color: #FADADD33;
+}

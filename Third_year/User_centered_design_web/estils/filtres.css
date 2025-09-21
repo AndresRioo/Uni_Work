@@ -1,0 +1,36 @@
+#filter-button {
+    background-color: #FADADD;
+    color: #4A4A4A;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+#filter-button:hover {
+    background-color: #F8BBD0;
+}
+
+#filter-panel h3 {
+    margin-bottom: 15px;
+}
+
+#filter-panel label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#accept-filters {
+    background-color: #FADADD;
+    color: #4A4A4A;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#accept-filters:hover {
+    background-color: #F8BBD0;
+}

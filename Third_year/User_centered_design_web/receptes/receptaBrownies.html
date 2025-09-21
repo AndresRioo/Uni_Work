@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estils/base.css">
+    <link rel="stylesheet" href="../estils/header.css">
+    <link rel="stylesheet" href="../estils/footer.css">
+    <link rel="stylesheet" href="../estils/comentari.css">
+    <link rel="stylesheet" href="../estils/modal.css">
+    <link rel="stylesheet" href="../estils/toast.css">
+    <link rel="stylesheet" href="../estils/recepta.css">
+    <title>Recepta: Brownies</title>
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+            <!-- Logo a la izquierda -->
+            <img src="../imatges/logo.png" alt="Logo" style="height: 40px;">
+    
+            <!-- Menú centrado -->
+            <nav style="flex-grow: 1; text-align: center;">
+                <a href="../inici.html">Inici</a>
+                <a href="../perfil.html">Perfil</a>
+                <a href="../contacte.html">Contacte</a>
+            </nav>
+    
+            <!-- Icono de cerrar sesión a la derecha -->
+            <a href="#" style="color: white; text-decoration: none; font-size: 20px;">
+                &#x274C; <!-- Icono de cerrar sesión -->
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="recipe-container">
+            <!-- Imagen y puntuación -->
+            <div class="recipe-image">
+                <img src="../imatges/brownies_chocolate.jpg" alt="Brownies de xocolata">
+                <div class="image-actions" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                    <div class="stars" style="color: gold;">★★★★★</div>
+                    <div class="save-icon" style="font-size: 20px; cursor: pointer;">💾 Guardar</div>
+                </div>
+            </div>
+        
+            <!-- Detalles de la receta -->
+            <div class="recipe-details">
+                <h1>Brownies de xocolata</h1>
+                <div class="tags">
+                    <span class="tag">Sense gluten</span>
+                    <span class="tag">Sense sucre</span>
+                    <span class="tag">Sense lactis</span>
+                </div>
+                <p style="margin-bottom: 20px;"> <!-- Añade margen inferior a la descripción -->
+                    Quan preparis aquesta recepta per primera vegada i la provis, no en voldràs mai cap altra. Si ets al club dels apassionats per la xocolata tant com nosaltres, es convertirà en el teu dolç preferit!
+                </p>
+                <p style="margin-top: 20px;"> <!-- Añade margen superior al texto de porciones -->
+                    <strong>Porcions:</strong> 
+                    <span id="portion-count">12</span>
+                    <button id="increase-portion" style="margin-left: 10px; background: none; border: none; cursor: pointer;">
+                        &#x25B2; <!-- Icono de flecha hacia arriba -->
+                    </button>
+                    <button id="decrease-portion" style="margin-left: 5px; background: none; border: none; cursor: pointer;">
+                        &#x25BC; <!-- Icono de flecha hacia abajo -->
+                    </button>
+                </p>
+        
+                <!-- Ingredientes y utensilios en dos columnas -->
+                <div class="columns" style="display: flex; gap: 20px; margin-top: 5px;">
+                    <!-- Ingredientes -->
+                    <div class="pink-box">
+                        <h3>Ingredients</h3>
+                        <ul>
+                            <li>200 grams de moniatos rostits.</li>
+                            <li>100 grams de plàtan madur.</li>
+                            <li>80 grams de crema de fruits secs.</li>
+                            <li>50 grams de cacau en pols pur sense sucre.</li>
+                            <li>1 cullaradeta de llevat de rebosteria o pols de coure.</li>
+                            <li>40 grams de farina d'ametlles.</li>
+                        </ul>
+                    </div>
+                
+                    <!-- Utensilios -->
+                    <div class="pink-box">
+                        <h3>Utensilis</h3>
+                        <ul>
+                            <li>Forn</li>
+                            <li>Motlle</li>
+                            <li>Forquilla</li>
+                            <li>Bol gran</li>
+                            <li>Paper de coure</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pasos -->
+        <div class="section">
+            <h3>Passos d'elaboració</h3>
+            <ol>
+                <li>Tritura els moniatos amb una forquilla fins a aconseguir un puré.</li>
+                <li>Tritura el plàtan amb una forquilla i barreja-ho amb el puré de moniato i la crema de cacau fins obtenir una barreja homogènia.</li>
+                <li>Tamisa el cacau i la pols de coure, afegeix-los a la barreja i integra'ls bé.</li>
+                <li>Afegeix-hi la farina d'ametlles i barreja-ho fins aconseguir una massa uniforme.</li>
+                <li>Forra un motlle amb paper de coure i aboca la barreja.</li>
+                <li>Forneja a 180 graus durant 25-30 minuts, calor amunt i avall, fins que en punxar amb un escuradents, surti net. </li>
+            </ol>
+        </div>
+
+        <!-- Comentarios -->
+        <div class="section">
+            <h3>Comentaris</h3>
+            <div class="comments-grid" style="display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px;">
+                <!-- Comentario 1 -->
+                <div class="comment" style="display: flex; gap: 15px; align-items: flex-start;">
+                    <img src="../imatges/perfil_cocinera.jpg" alt="Foto de perfil"">
+                    <div>
+                        <p style="margin: 0; font-weight: bold;">@teresa31 <span style="font-weight: normal; font-size: 12px; color: gray;">(01/04/2025)</span></p>
+                        <p style="margin: 5px 0;">Aquest brownie és espectacular! Molt fàcil de fer, deliciós i, a més, sense sucre :0</p>
+                    </div>
+                </div>
+
+                <!-- Comentario 2 -->
+                <div class="comment" style="display: flex; gap: 15px; align-items: flex-start;">
+                    <img src="../imatges/perfil_cocinera.jpg" alt="Foto de perfil">
+                    <div>
+                        <p style="margin: 0; font-weight: bold;">@JoanVidal <span style="font-weight: normal; font-size: 12px; color: gray;">(02/04/2025)</span></p>
+                        <p style="margin: 5px 0;">M'ha encantat la recepta. No he tingut cap problema amb els ingredients!</p>
+                    </div>
+                </div>
+
+                <!-- Comentario 3 -->
+                <div class="comment" style="display: flex; gap: 15px; align-items: flex-start;">
+                    <img src="../imatges/perfil_cocinera.jpg" alt="Foto de perfil">
+                    <div>
+                        <p style="margin: 0; font-weight: bold;">@alexis0k <span style="font-weight: normal; font-size: 12px; color: gray;">(03/04/2025)</span></p>
+                        <p style="margin: 5px 0;">Perfecta per a un berenar amb amics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Botón fijo -->
+    <a id="interactive-cooking-button">
+        Iniciar cuina interactiva
+    </a>
+
+    <!-- Modal para la pregunta -->
+    <div id="modal">
+        <button class="close-modal">&times;</button>
+        <p>Vols afegir una altra recepta i preparar-les simultàniament?</p>
+        <div style="margin-top: 20px;">
+            <button id="yes-button">Busca una altra</button>
+            <button id="no-button">Comença a cuinar</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; FHiC 2025 - Sense Fre A Les Magdalenes
+    </footer>
+</body>
+
+<!-- Mensaje temporal -->
+<div id="toast-message"></div>
+<script src="../scripts/saveMessage.js"></script>
+
+<script src="../scripts/modalRecipes.js"></script>
+
+<script src="../scripts/adjustPortions.js"></script>
+<script>
+    initializePortionAdjuster({
+        portionCountElementId: 'portion-count',
+        decreaseButtonId: 'decrease-portion',
+        increaseButtonId: 'increase-portion',
+        ingredientSelector: '.pink-box ul li',
+        originalQuantities: [
+            { text: "200 grams de puré de moniato.", value: 200 },
+            { text: "100 grams de plàtan madur.", value: 100 },
+            { text: "80 grams de crema de fruits secs.", value: 80 },
+            { text: "50 grams de cacau en pols pur sense sucre.", value: 50 },
+            { text: "1 cullaradeta de llevat de rebosteria o pols de coure.", value: 1 },
+            { text: "40 grams de farina d'ametlles.", value: 40 }
+        ],
+        initialPortions: 12
+    });
+</script>
+</html>

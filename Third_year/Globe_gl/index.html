@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>P3-Globe-GL-Vis: Inspired by WebGL Globe</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="//cdn.jsdelivr.net/npm/globe.gl"></script>
+    <script src="util.js"></script>
+  </head>
+
+  <body>
+
+    <div id="globeViz"></div>
+
+    <div id="config">
+      <div id="dataTitle">
+        <b>World Information</b>
+      </div>
+
+      <div id="DataList">
+        <span id="Currency" class="data">Currency</span>
+        <span id="Capital" class="data">Capital</span>
+        <span id="Continent" class="data">Continent</span>
+        <span id="Subcontinent" class="data">Subcontinent</span>        
+        <span id="Timezone" class="data">Timezone</span>
+        <span id="PhoneCode" class="data">PhoneCode</span>
+      </div>
+
+      <div id="visTitle">
+        <b>Method</b>
+      </div>
+      
+      <div id="visList">
+        <span id="square" class="vis">Area</span>
+        <span id="points" class="vis">Points</span>
+        <span id="outline" class="vis">Outline</span>
+        <!-- TODO: Afegiu aquí més mètodes de visualització -->
+        <!-- <span id="<metode1>" class="vis">"<Metode1>"</span>  -->
+      </div>
+
+
+    <script type="module">
+      import * as THREE from 'https://esm.sh/three';
+      import { scaleLinear } from 'https://esm.sh/d3-scale';
+      import { csvParse } from 'https://esm.sh/d3-dsv';
+      import { scaleSequentialSqrt } from 'https://esm.sh/d3-scale';
+      import { interpolateYlOrRd } from 'https://esm.sh/d3-scale-chromatic';
+      import { scaleOrdinal } from 'https://esm.sh/d3-scale';
+      import { schemeCategory10 } from 'https://esm.sh/d3-scale-chromatic';
+      import { transparentize } from 'https://esm.sh/polished';
+      import { scaleSequential } from 'https://esm.sh/d3-scale';
+      import { interpolateRainbow } from 'https://esm.sh/d3-scale-chromatic';
+
+      // Create new world
+      const world = new Globe(document.getElementById('globeViz'));
+
+      // Read the population data using the basic data parser
+      let dataObject = await getDataFetch('./datasets/countries.json', parseData);
+      //let dataObject = await getDataFetch('./datasets/airports.json', parseData);
+
+      function updateLegend(scale, minWeight, maxWeight) {
+        const midWeight = (minWeight + maxWeight) / 2;
+        const legendRangeContainer = document.getElementById('legendRange');
+        legendRangeContainer.innerHTML = `
+          <div id="legendLabels" style="display: flex; justify-content: space-between; width: 100%;">
+            <span style="text-align:left;">${formatShort(minWeight)}</span>
+            <span style="text-align:center;">${formatShort(midWeight)}</span>
+            <span style="text-align:right;">${formatShort(maxWeight)}</span>
+          </div>
+        `;
+
+        const canvas = document.getElementById('legendCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Make canvas responsive
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Create gradient
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        const steps = 10;
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps;
+          gradient.addColorStop(t, scale(t * (scale.domain()[1] - scale.domain()[0]) + scale.domain()[0]));
+        }
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      let currentField = 'currency'; // valor por defecto inicial
+
+      // Visual Mapping of the data by the selected data and method
+      async function mappingSelectedData(method, field) {
+
+
+      // Limpia datos anteriores
+      world.pointsData([]);
+      world.hexPolygonsData([]);
+      world.polygonsData([]);
+
+
+      if (method === 'points') {
+
+        const countriesGeoJson = await fetch('./datasets/area_country.geojson').then(res => res.json());
+
+        const featuresWithValue = countriesGeoJson.features.map(f => {
+          const countryName = f.properties.ADMIN;
+          const value = dataObject[countryName]?.[field] || 'N/A';
+          const lat = dataObject[countryName]?.lat;
+          const lng = dataObject[countryName]?.lng;
+          return { ...f, value, lat, lng };
+        });
+
+        const uniqueValues = [...new Set(featuresWithValue.map(f => f.value))];
+        const colorScale = scaleOrdinal(schemeCategory10).domain(uniqueValues);
+
+        world
+          .pointAltitude(() => 0.05)
+          .pointColor(d => colorScale(d.value))
+          .pointRadius(0.34)
+          .pointLabel(d => `<div>${capitalize(field)}: <em>${d.value}</em></div>`)
+          .labelLat('lat')
+          .labelLng('lng');
+
+        world.pointsData(featuresWithValue);
+      }
+
+
+      else if (method === 'square') {
+        const countriesGeoJson = await fetch('./datasets/area_country.geojson').then(res => res.json());
+
+        const featuresWithValue = countriesGeoJson.features.map(f => {
+          const countryName = f.properties.ADMIN;
+          const value = dataObject[countryName]?.[field] || 'N/A';
+          return { ...f, value };
+        });
+
+        const uniqueValues = [...new Set(featuresWithValue.map(f => f.value))];
+        const colorScale = scaleOrdinal(schemeCategory10).domain(uniqueValues);
+
+
+        world
+          .hexPolygonsData(featuresWithValue)
+          .hexPolygonResolution(4)
+          .hexPolygonMargin(0)
+          .hexPolygonUseDots(false)
+          .hexPolygonColor(d => colorScale(d.value))
+          .hexPolygonLabel(d => `
+            <b>${d.properties.ADMIN} (${d.properties.ISO_A2})</b><br/>
+            ${capitalize(field)}: <i>${d.value}</i>
+          `);
+          
+
+
+      } else if (method === 'outline') {
+
+        
+          const countriesGeoJson = await fetch('./datasets/area_country.geojson').then(res => res.json());
+
+          const featuresWithValue = countriesGeoJson.features.map(f => {
+            const countryName = f.properties.ADMIN;
+            const value = dataObject[countryName]?.[field] || 'N/A';
+            return { ...f, value };
+          });
+
+          const uniqueValues = [...new Set(featuresWithValue.map(f => f.value))];
+          const colorScale = scaleOrdinal(schemeCategory10).domain(uniqueValues);
+
+          world
+            .polygonsData(featuresWithValue)
+            //.polygonCapColor(d => 1 - colorScale(d.value)) // relleno morado
+            .polygonCapColor(() => 'rgba(0,0,0,0.55)') // relleno negro
+            //.polygonCapColor(() => 'rgba(255,255,255,0.55)') // relleno blanco
+            .polygonSideColor(() => 'rgba(255,0,0,0)') // sin borde lateral
+            .polygonStrokeColor(d => colorScale(d.value)) // solo línea fina
+            .polygonLabel(d => `
+              <b>${d.properties.ADMIN} (${d.properties.ISO_A2})</b><br/>
+              ${capitalize(field)}: <i>${d.value}</i>
+            `)
+            .polygonAltitude(0.3)
+            .polygonStrokeWidth(0.2) // más gordo que el default (~0.1);
+            ;
+            
+        } 
+
+
+
+        
+        
+        /*
+        else if (method === 'extrude') {
+
+            const countriesGeoJson = await fetch('./datasets/area_country.geojson').then(res => res.json());
+
+            const featuresWithValue = countriesGeoJson.features.map(f => {
+              const countryName = f.properties.ADMIN;
+              const value = parseFloat(dataObject[countryName]?.[field]);
+              return {
+                ...f,
+                value: isNaN(value) ? 0 : value
+              };
+            });
+
+            // Normalizar valor para altura
+            const maxValue = Math.max(...featuresWithValue.map(f => f.value));
+            const minValue = Math.min(...featuresWithValue.map(f => f.value));
+            const altitudeScale = scaleLinear().domain([minValue, maxValue]).range([0.01, 0.3]);
+
+            // Color opcional por intensidad
+            const colorScale = scaleSequential(interpolateYlOrRd).domain([minValue, maxValue]);
+
+            world
+              .polygonsData(featuresWithValue)
+              .polygonAltitude(d => altitudeScale(d.value))
+              .polygonCapColor(d => colorScale(d.value))
+              .polygonSideColor(() => 'rgba(0, 100, 100, 0.15)')
+              .polygonStrokeColor(() => '#999')
+              .polygonLabel(d => `
+                <b>${d.properties.ADMIN}</b><br/>
+                ${capitalize(field)}: <i>${d.value}</i>
+              `)
+              .polygonsTransitionDuration(300);
+          }
+              */
+
+
+
+  }
+
+  function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
+
+
+      // Set the data by data
+      async function handledataHover(data) {
+        document.querySelectorAll('.data').forEach((el) => {
+          if (el.id !== data) {
+            el.classList.remove('active');
+          }
+        });
+        document.getElementById(data).classList.add('active');
+
+        // Set new field based on clicked data
+        if (data === 'Currency') currentField = 'currency';
+        else if (data === 'Capital') currentField = 'capital';
+        else if (data === 'Continent') currentField = 'continent';
+        else if (data === 'Subcontinent') currentField = 'subcontinent';
+        else if (data === 'Timezone') currentField = 'timezone';
+        else if (data === 'PhoneCode') currentField = 'phonecode';
+
+        let methodElement = document.querySelector('.vis.active');
+        const method = methodElement ? methodElement.id : 'points';
+        document.getElementById('dataTitle').innerHTML = `<b>World Information </b>`;
+
+        mappingSelectedData(method, currentField);
+      }
+
+
+
+
+      async function handleVisHover(method) {
+        document.querySelectorAll('.vis').forEach(el => el.classList.remove('active'));
+        document.getElementById(method).classList.add('active');
+        document.getElementById('visTitle').innerHTML = `<b>Method ${method}</b>`;
+
+        mappingSelectedData(method, currentField);
+      }
+
+
+
+      // Set the initial method to points
+      handleVisHover('outline');
+      handledataHover('Currency');
+
+      // Add event listeners for the data spans
+      document.getElementById('Currency').addEventListener('mouseover', () => handledataHover('Currency'));
+      document.getElementById('Capital').addEventListener('mouseover', () => handledataHover('Capital'));
+      document.getElementById('Continent').addEventListener('mouseover', () => handledataHover('Continent'));
+      document.getElementById('Subcontinent').addEventListener('mouseover', () => handledataHover('Subcontinent'));
+      document.getElementById('Timezone').addEventListener('mouseover', () => handledataHover('Timezone'));
+      document.getElementById('PhoneCode').addEventListener('mouseover', () => handledataHover('PhoneCode'));
+
+      // Add event listeners for the visualization spans
+      document.getElementById('points').addEventListener('mouseover', () => handleVisHover('points'));
+      document.getElementById('square').addEventListener('mouseover', () => handleVisHover('square'));
+      document.getElementById('outline').addEventListener('mouseover', () => handleVisHover('outline'));
+      
+      // TODO: Afegiu listeners d'esdeveniments per als mètodes aplicats
+      // document.getElementById('someOtherMethod').addEventListener('mouseover', () => handleVisHover('someOtherMethod'));
+
+      // Set the world texture and start the animation
+      Promise.all([
+        new THREE.TextureLoader().loadAsync('./resources/earth-day.jpg')
+      ]).then(([texture]) => {
+        const material = new THREE.ShaderMaterial({
+          uniforms: {
+            textureMap: { value: texture },
+          },
+          vertexShader: basicShaders.vertexShader,
+          fragmentShader: basicShaders.fragmentShader
+        });
+        world.globeMaterial(material);
+      });
+
+      // Add auto-rotation
+      // world.controls().autoRotate = true;
+      // world.controls().autoRotateSpeed = 0.6;
+
+      // Kick-off renderer
+      requestAnimationFrame(() =>
+        (function animate() {
+          requestAnimationFrame(animate);
+        })()
+      );
+    </script>
+  </body>
+</html>

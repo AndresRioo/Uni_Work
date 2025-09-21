@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #FFF8F0;
+    color: #4A4A4A;
+}
+
+main {
+    flex-grow: 1;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 20px;
+}

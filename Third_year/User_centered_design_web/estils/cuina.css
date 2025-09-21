@@ -1,0 +1,96 @@
+
+.interactive-header {
+    margin-top: 15px;
+    position: relative;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.interactive-header .recipe-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #4A4A4A;
+    margin: 0;
+}
+
+.exit-button {
+    position: absolute;
+    top: 50%;
+    left: -50px; /* Alineado con el marco del contenido */
+    transform: translateY(-50%);
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F4978E;
+    color: #4A4A4A;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.exit-button:hover {
+    background-color: #FCC8C2;
+    color: white;
+    transform: translateY(-50%) scale(1.1); /* Efecto de hover */
+}
+.interactive-box {
+    position: relative;
+    background-color: #FADADD; 
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: calc(100% - 40px); /* Llenar el ancho con márgenes laterales */
+    margin: 20px auto; /* Centrar horizontalmente con un margen superior */
+    flex-grow: 1; /* Ocupar todo el espacio disponible */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: calc(100vh - 140px - 15px - 40px); /* Altura total menos header, footer, título y márgenes */
+}
+
+.step-description {
+    font-size: 18px;
+    color: #4A4A4A;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.images-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Permitir que las imágenes se ajusten si hay muchas */
+}
+
+.step-image {
+    width: 300px; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.prev-button,
+.next-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFF8F0;
+    color: #4A4A4A;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.prev-button:hover,
+.next-button:hover {
+    background-color: #F4978E;
+    color: white;
+}

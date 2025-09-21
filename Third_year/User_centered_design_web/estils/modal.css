@@ -1,0 +1,61 @@
+
+#modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: auto; 
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    z-index: 2000;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#modal button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#yes-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#yes-button:hover {
+    background-color: #45a049;
+}
+
+#no-button {
+    background-color: #f44336;
+    color: white;
+    margin-left: 10px;
+}
+
+#no-button:hover {
+    background-color: #e53935;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+    color: #f44336;
+}

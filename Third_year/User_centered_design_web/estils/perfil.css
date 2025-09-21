@@ -1,0 +1,142 @@
+.profile-info {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-info img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.profile-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.profile-info p {
+    font-size: 18px;
+    color: gray;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.tabs button {
+    padding: 10px 20px;
+    border: 2px solid #FCC8C2; 
+    background-color: #FFF8F0;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 25px; 
+    font-size: 16px;
+    font-weight: bold;
+    color: #4A4A4A;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tabs button:hover {
+    background-color: #FFFFFF; 
+    color: #4A4A4A; 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.tabs button.active {
+    background-color: #FFFFFF; 
+    color: #4A4A4A;
+    border-color: #F4978E;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.section {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section ul {
+    list-style: disc;
+    margin-left: 20px;
+    font-size: 16px;
+    color: #666;
+}
+
+.pink-box {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #FADADD;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pink-box h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.pink-box ul {
+    list-style: disc;
+    margin-left: 20px;
+    font-size: 16px;
+    color: #666;
+}
+
+.pink-box ul li {
+    margin-bottom: 5px;
+}
+
+.delete-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.delete-button:hover {
+    background-color: rgba(255, 0, 0, 1);
+}
+
+#libreta-1-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+#back-button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #FADADD;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #4A4A4A;
+    margin-right: auto;
+}
+
+#back-button:hover {
+    background-color: #ddd;
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estils/base.css">
+    <link rel="stylesheet" href="../estils/header.css">
+    <link rel="stylesheet" href="../estils/footer.css">
+    <link rel="stylesheet" href="../estils/cerca.css">
+    <link rel="stylesheet" href="../estils/grid.css">
+    <link rel="stylesheet" href="../estils/filtres.css">
+    <title>Cerca: brownies</title>
+    </style>
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+            <!-- Logo a la izquierda -->
+            <img src="../imatges/logo.png" alt="Logo" style="height: 40px;">
+    
+            <!-- Menú centrado -->
+            <nav style="flex-grow: 1; text-align: center;">
+                <a href="../inici.html">Inici</a>
+                <a href="../perfil.html">Perfil</a>
+                <a href="../contacte.html">Contacte</a>
+            </nav>
+    
+            <!-- Icono de cerrar sesión a la derecha -->
+            <a href="#" style="color: white; text-decoration: none; font-size: 20px;">
+                &#x274C; <!-- Icono de cerrar sesión -->
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="search-bar">
+            <div class="search-wrapper">
+                <input type="text" placeholder="Cerca una recepta..." id="search-input">
+                <span class="search-icon">🔍</span>
+            </div>            <button id="filter-button" style="margin-left: 10px; padding: 10px; background-color: #333; color: white; border: none; cursor: pointer; border-radius: 5px;">
+                Filtres
+            </button>
+            <div class="recent-list" id="recent-list">
+                <ul>
+                    <li><a href="cercaBrownies.html">Brownies</a></li>
+                    <li><a href="cercaMagdalenes.html">Magdalenes</a></li>
+                    <li>Tartaleta de fruites</li>
+                    <li>Dónuts de xocolata</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Pestaña de filtros -->
+        <div id="filter-panel" style="display: none; position: fixed; top: 20%; left: 50%; transform: translate(-50%, -20%); width: 300px; background-color: white; border: 1px solid #ddd; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 20px; z-index: 1000;">
+            <button id="close-filters" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 18px; cursor: pointer;">&#x274C;</button>
+            <h3>Filtres</h3>
+            <form id="filter-form">
+                <label><input type="checkbox" name="filter" value="xocolata"> Sense lactis</label><br>
+                <label><input type="checkbox" name="filter" value="sense gluten"> Sense gluten</label><br>
+                <label><input type="checkbox" name="filter" value="sense sucre"> Sense sucre</label><br>
+                <label><input type="checkbox" name="filter" value="vega"> Vegà</label><br>
+                <button type="button" id="accept-filters" style="margin-top: 20px; float: right;" data-destination="./cercaMagdalenesFiltrades.html">Aplicar</button>
+            </form>
+        </div>
+
+        <div class="grid">
+            <div class="grid-item">
+                <img src="../imatges/cupcakes_chocolate.jpg" alt="Magdalenes de xocolata">
+                <h3>Magdalenes de xocolata</h3>
+                <div class="tags">
+                    <span class="tag">Sense sucre</span>
+                </div>
+                <div class="stars">★★★★★</div>
+            </div>
+            <div class="grid-item">
+                <img src="../imatges/cupcakes_vainilla.jpg" alt="Magdalenes de vainilla">
+                <h3>Magdalenes de vainilla</h3>
+                <div class="tags">
+                    <span class="tag">Sense gluten</span>
+                </div>
+                <div class="stars">★★★★★</div>
+            </div>
+            <div class="grid-item">
+                <a href="../receptes/receptaMagdalenes.html" style="text-decoration: none; color: inherit;">
+                    <img src="../imatges/cupcakes_basic.jpg" alt="Magdalenes">
+                    <h3>Magdalenes</h3>
+                    <div class="stars">★★★★☆</div>
+                </a>
+            </div>
+            <div class="grid-item">
+                <img src="../imatges/cupcakes_limon.jpg" alt="Magdalenes de llimona">
+                <h3>Magdalenes de llimona</h3>
+                <div class="stars">★★★★★</div>
+            </div>
+            <div class="grid-item">
+                <img src="../imatges/cupcakes_oreo.jpg" alt="Magdalenes d'oreo">
+                <h3>Magdalenes d'oreo</h3>
+                <div class="tags">
+                    <span class="tag">Sense lactis</span>
+                </div>
+                <div class="stars">★★★★★</div>
+            </div>
+            <div class="grid-item">
+                <img src="../imatges/cupcakes_chocolate.jpg" alt="Magdalenes de xocolata">
+                <h3>Magdalenes de xocolata</h3>
+                <div class="tags">
+                    <span class="tag">Vegetarià</span>
+                </div>
+                <div class="stars">★★★★★</div>
+            </div>
+            <div class="grid-item">
+                <a href="../receptes/receptaMagdalenes.html" style="text-decoration: none; color: inherit;">
+                    <img src="../imatges/cupcakes_basic.jpg" alt="Magdalenes">
+                    <h3>Magdalenes</h3>
+                    <div class="stars">★★★★☆</div>
+                </a>
+            </div>
+            <div class="grid-item">
+                <img src="../imatges/cupcakes_oreo.jpg" alt="Magdalenes d'oreo">
+                <h3>Magdalenes d'oreo</h3>
+                <div class="tags">
+                    <span class="tag">Vegetarià</span>
+                </div>
+                <div class="stars">★★★★★</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; FHiC 2025 - Sense Fre A Les Magdalenes
+    </footer>
+</body>
+
+<script src="../scripts/showSearches.js"></script>
+<script src="../scripts/showFilters.js"></script>
+
+</html>
