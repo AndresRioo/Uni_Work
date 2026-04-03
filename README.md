@@ -109,3 +109,40 @@ Please note that this app is a functional prototype with a simulated backend. It
 
 
 
+## Fourth Year
+
+### Machine Learning
+
+This repository contains a set of practical projects covering the full machine learning workflow, from data exploration to model evaluation and optimization using Python and scikit-learn.  
+
+The projects include regression models (Linear Regression, KNN), classification with Support Vector Machines (SVM), and ensemble methods such as boosting implemented from scratch using Decision Trees.  
+Advanced topics such as handling imbalanced datasets, evaluation metrics, overfitting, and hyperparameter tuning are also explored.  
+
+Additionally, a deep learning project using Convolutional Neural Networks (CNNs) was developed to process and analyze image data, including architecture design, data augmentation, and regularization techniques.  
+
+
+
+
+### Software Engineering
+
+This repository contains a full-stack project developed in a team of 7 people, simulating a real-world software development environment using Agile and DevOps methodologies.  
+
+The project consists of an event management system built from scratch with a React frontend and a Spring Boot backend, connected to a PostgreSQL database (Supabase) and deployed using CI/CD pipelines on Render.  
+
+The development process followed Scrum with multiple sprints, including planning, daily stand-ups, demos, and retrospectives. Tasks were managed using Kanban boards, and all features were defined through user stories with acceptance criteria.  
+
+A key aspect of the project was role rotation, where each team member worked across different roles such as frontend, backend, QA, DevOps, Scrum Master, and Product Owner.  
+
+The project also incorporated professional practices such as GitHub-based workflows, code reviews, automated testing, and continuous integration and deployment.  
+
+**Tools & Technologies:** React, Java, Spring Boot, PostgreSQL (Supabase), GitHub, GitHub Actions, Render, REST APIs, Agile (Scrum, Kanban)  
+
+
+
+### Image Processing
+
+This repository focuses on advanced image processing techniques, with an emphasis on image restoration and manipulation tasks.  
+
+The projects include methods such as image inpainting, filtering, and reconstruction, exploring how missing or corrupted regions of an image can be recovered using algorithmic approaches. The work combines mathematical foundations with practical implementations to understand how images can be enhanced, repaired, or transformed.  
+
+The main goal is to gain a deeper understanding of how low-level image processing techniques can be applied to real-world problems, bridging the gap between classical computer vision and modern machine learning approaches.  
