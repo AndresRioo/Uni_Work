@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>P3-Globe-GL-Vis: Inspired by WebGL Globe</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="//cdn.jsdelivr.net/npm/globe.gl"></script>
+    <script src="util.js"></script>
+  </head>
+
+  <body>
+
+    <div id="globeViz"></div>
+
+    <div id="config">
+      <div id="yearTitle">
+        <b>World Population</b>
+      </div>
+
+      <div id="yearList">
+        <span id="1990" class="year">1990</span>
+        <span id="1995" class="year">1995</span>
+        <span id="2000" class="year">2000</span>
+      </div>
+
+      <div id="visTitle">
+        <b>Method</b>
+      </div>
+      
+      <div id="visList">
+        <span id="points" class="vis">Points</span>
+        <span id="square" class="vis">Square</span>
+        <!-- TODO: Afegiu aquí més mètodes de visualització -->
+        <!-- <span id="<metode1>" class="vis">"<Metode1>"</span>  -->
+      </div>
+
+      <div id="legendTitle">
+        <b>Population Weight</b>
+      </div>
+
+      <div id="legend">
+        <div id="legendContainer">
+          <canvas id="legendCanvas" width="200" height="20"></canvas>
+          <div id="legendRange"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import * as THREE from 'https://esm.sh/three';
+      import { scaleLinear } from 'https://esm.sh/d3-scale';
+      import { csvParse } from 'https://esm.sh/d3-dsv';
+      import { scaleSequentialSqrt } from 'https://esm.sh/d3-scale';
+      import { interpolateYlOrRd } from 'https://esm.sh/d3-scale-chromatic';
+      import { scaleOrdinal } from 'https://esm.sh/d3-scale';
+      import { schemeCategory10 } from 'https://esm.sh/d3-scale-chromatic';
+      import { transparentize } from 'https://esm.sh/polished';
+      import { scaleSequential } from 'https://esm.sh/d3-scale';
+      import { interpolateRainbow } from 'https://esm.sh/d3-scale-chromatic';
+
+      // Create new world
+      const world = new Globe(document.getElementById('globeViz'));
+
+      // Read the population data using the basic data parser
+      let dataObject = await getDataFetch('./datasets/countries.json', parseData);
+      //let dataObject = await getDataFetch('./datasets/airports.json', parseData);
+
+      function updateLegend(scale, minWeight, maxWeight) {
+        const midWeight = (minWeight + maxWeight) / 2;
+        const legendRangeContainer = document.getElementById('legendRange');
+        legendRangeContainer.innerHTML = `
+          <div id="legendLabels" style="display: flex; justify-content: space-between; width: 100%;">
+            <span style="text-align:left;">${formatShort(minWeight)}</span>
+            <span style="text-align:center;">${formatShort(midWeight)}</span>
+            <span style="text-align:right;">${formatShort(maxWeight)}</span>
+          </div>
+        `;
+
+        const canvas = document.getElementById('legendCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Make canvas responsive
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Create gradient
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        const steps = 10;
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps;
+          gradient.addColorStop(t, scale(t * (scale.domain()[1] - scale.domain()[0]) + scale.domain()[0]));
+        }
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      // Visual Mapping of the data by the selected year and method
+      function mappingSelectedData(method) {
+        // Limpia los datos anteriores
+        world.pointsData([]);
+
+        // Define tooltip para mostrar la moneda (value)
+        const getTooltip = d => `
+          <div style="text-align: center">
+            <div>Currency: <em>${d.value}</em></div>
+          </div>
+        `;
+
+        if (method === 'points') {
+          world
+            .pointAltitude(() => 0.5)  // Altura fija
+            .pointColor(() => 'red')   // Color fijo
+            .pointRadius(0.2)
+            .pointLabel(getTooltip)
+            .labelLat('lat')
+            .labelLng('lng');
+
+          // Pasa los datos convertidos a array
+          world.pointsData(Object.values(dataObject));
+        }
+        // Aquí puedes añadir otros métodos si quieres
+
+        
+
+
+
+    }
+
+
+
+
+      // Set the method of visualization
+      async function handleVisHover(method) {
+        document.querySelectorAll('.vis').forEach(el => el.classList.remove('active'));
+        document.getElementById(method).classList.add('active');
+        document.getElementById('visTitle').innerHTML = `<b>Method ${method}</b>`;
+        mappingSelectedData(method);
+      }
+
+
+      // Set the initial method to points
+      handleVisHover('points');
+
+      // Add event listeners for the year spans
+      document.getElementById('1990').addEventListener('mouseover', () => handleYearHover('1990'));
+      document.getElementById('1995').addEventListener('mouseover', () => handleYearHover('1995'));
+      document.getElementById('2000').addEventListener('mouseover', () => handleYearHover('2000'));
+
+      // Add event listeners for the visualization spans
+      document.getElementById('points').addEventListener('mouseover', () => handleVisHover('points'));
+      
+      // TODO: Afegiu listeners d'esdeveniments per als mètodes aplicats
+      // document.getElementById('someOtherMethod').addEventListener('mouseover', () => handleVisHover('someOtherMethod'));
+
+      // Set the world texture and start the animation
+      Promise.all([
+        new THREE.TextureLoader().loadAsync('./resources/earth-day.jpg')
+      ]).then(([texture]) => {
+        const material = new THREE.ShaderMaterial({
+          uniforms: {
+            textureMap: { value: texture },
+          },
+          vertexShader: basicShaders.vertexShader,
+          fragmentShader: basicShaders.fragmentShader
+        });
+        world.globeMaterial(material);
+      });
+
+      // Add auto-rotation
+      // world.controls().autoRotate = true;
+      // world.controls().autoRotateSpeed = 0.6;
+
+      // Kick-off renderer
+      requestAnimationFrame(() =>
+        (function animate() {
+          requestAnimationFrame(animate);
+        })()
+      );
+    </script>
+  </body>
+</html>

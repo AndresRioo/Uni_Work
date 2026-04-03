@@ -1,0 +1,237 @@
+/***********************
+ *   CONTENIDOR GENERAL
+ ***********************/
+.register-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  /*background: var(--navbar-gradient, linear-gradient(135deg, #828282 0%, #4f4f50 50%, #000000 100%));*/
+  background: linear-gradient(135deg, rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
+  url("../../assets/avatars/fonsregister.jpg") center/cover no-repeat;
+  transition: background 0.3s ease;
+}
+
+/***********************
+ *       FORMULARI
+ ***********************/
+.register-form {
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.15);
+  padding: 48px;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: var(--shadow-md, 0 20px 60px rgba(0, 0, 0, 0.08));
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.register-form h2 {
+  text-align: center;
+  margin-bottom: 12px;
+  color: #e9eaeb;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.form-subtitle {
+  text-align: center;
+  color: #a8a8a8 !important;
+  margin-bottom: 40px;
+  font-size: 16px;
+}
+
+/***********************
+ *  ESTRUCTURA DE FILES
+ ***********************/
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.register-form .form-group {
+  margin-bottom: 24px;
+}
+
+.register-form .form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #e9eaeb;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+/***********************
+ *   ESTIL GENERAL INPUTS
+ ***********************/
+.register-form .form-input,
+.register-form select.form-input,
+.multi-dropdown-header,
+.multi-dropdown-menu {
+  width: 100%;
+  background-color: #6b6b6b;
+  color: #e9eaeb !important;
+  border: 2px solid #000000;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.register-form .form-input::placeholder {
+  color: #d3d3d3;
+}
+
+.register-form .form-input:focus {
+  outline: none;
+  border-color: #f65cd2;
+  background-color: #7c7c7c;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+}
+
+/***********************
+ *      ERRORS
+ ***********************/
+.register-form .form-input.error {
+  border-color: #ef4444;
+  background-color: #7a4a4a;
+  color: white;
+}
+
+.register-form .error-message {
+  color: #ef4444;
+  font-size: 13px;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/***********************
+ *   PASSWORD BOX
+ ***********************/
+.password-requirements {
+  font-size: 13px;
+  color: #e9eaeb;
+  background: #5a5a5a;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #000000;
+  margin-top: 12px;
+}
+
+.password-requirements p {
+  margin: 0 0 8px 0;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.password-requirements li {
+  margin-bottom: 6px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  color: #dcdcdc;
+}
+
+.password-requirements li.valid {
+  color: #10b981;
+}
+
+.password-requirements li.valid::before {
+  content: "✓";
+  margin-right: 8px;
+  color: #10b981;
+}
+
+/***********************
+ *  MULTI DROPDOWN CUSTOM
+ ***********************/
+.multi-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.multi-dropdown-header {
+  background: #6b6b6b;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.multi-dropdown-menu {
+  position: absolute;
+  background: #6b6b6b;
+  border: 2px solid #000;
+  width: 100%;
+  z-index: 10;
+  margin-top: 4px;
+  border-radius: 6px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.multi-dropdown-menu label {
+  display: flex;
+  align-items: center;
+  color: #e9eaeb;
+}
+
+/***********************
+ *         BOTÓ
+ ***********************/
+.register-submit {
+  width: 100%;
+  padding: 20px 32px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, #828282 0%, #4f4f50 50%, #000000 100%);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(156, 156, 156, 0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.register-submit:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+  filter: brightness(1.1);
+}
+
+.register-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/***********************
+ *       FOOTER
+ ***********************/
+.form-footer {
+  margin-top: 32px;
+  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid #444;
+}
+
+.form-footer p {
+  color: #d0d0d0;
+  font-size: 14px;
+}
+
+.form-footer a {
+  color: #bfa5ff;
+  text-decoration: none;
+  font-weight: 600;
+}
