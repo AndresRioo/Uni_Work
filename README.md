@@ -30,7 +30,7 @@ The code includes UART initialization, half-duplex communication handling, and s
 
 This project implements fundamental scientific computing methods using the C programming language. It focuses on two main areas:  Linear interpolation to approximate functions based on discrete data points and Numerical linear algebra, including solving systems of linear equations using techniques such as Gaussian elimination.
 
-# Natural Disasters Database Project
+### Natural Disasters Database Project
 
 This repository contains the full development of a two-part academic project focused on building and analyzing a database related to natural disasters. The goal was to define a real-world data model, collect and process relevant information, and perform exploratory and analytical queries using relational algebra and SQL. The first part covers the theoretical and conceptual design (including the ER model and query planning), while the second part focuses on the database implementation and data analysis. The project was developed as part of the "Database Theory" course at the University of Barcelona (2023–2024).
 
