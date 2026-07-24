@@ -1,0 +1,84 @@
+services:
+  api:
+    container_name: bdda_api
+    build: .
+    command: sh -c 'yoyo list --database postgresql://postgres:postgres@postgreSQL/postgres; yoyo apply --database postgresql://postgres:postgres@postgreSQL/postgres --batch; uvicorn app.main:app --host 0.0.0.0'
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgreSQL
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+      DB_HOST: postgreSQL
+      DB_PORT: 5432
+      REDIS_HOST: redis
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: postgreSQL
+      POSTGRES_PORT: 5432
+  postgreSQL:
+    image: postgres:14-alpine
+    container_name: bdda_postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+  redis:
+    image: redis:7-alpine
+    container_name: bdda_redis
+    ports:
+      - 6379:6379
+    expose:
+      - 6379
+
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: bdda_redis_exporter
+    environment:
+      - REDIS_ADDR=redis:6379
+    ports:
+      - 9121:9121
+    depends_on:
+      - redis
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: bdda_prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    depends_on:
+      - api
+      - redis-exporter
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: bdda_grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana_plugins:/var/lib/grafana/plugins
+    depends_on:
+      - postgreSQL
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_INSTALL_PLUGINS=redis-datasource
+
+volumes:
+  postgres_data:
+  grafana_plugins:

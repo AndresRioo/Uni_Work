@@ -1,38 +1,38 @@
 # Advanced Databases – Polyglot Persistence Architecture
 
-Este repositorio reúne las prácticas desarrolladas durante la asignatura **Advanced Databases (BDDA)**. A lo largo de seis proyectos consecutivos se diseña y evoluciona una plataforma de gestión logística para una flota de drones, incorporando progresivamente diferentes paradigmas de almacenamiento y procesamiento de datos.
+This repository contains the projects developed during the **Advanced Databases (BDDA)** course. Across six consecutive projects, a logistics management platform for a drone fleet is designed and progressively evolved, incorporating different data storage and processing paradigms.
 
-El objetivo principal es comprender cuándo y por qué utilizar cada tecnología, construyendo una arquitectura de persistencia políglota donde cada componente resuelve un problema específico de forma eficiente.
+The main objective is to understand when and why each technology should be used, building a polyglot persistence architecture where every component efficiently solves a specific problem.
 
-## Arquitectura Evolutiva
+## Evolutionary Architecture
 
-| Proyecto                                   | Tecnología Principal | Paradigma             | Objetivo                                              |
-| ------------------------------------------ | -------------------- | --------------------- | ----------------------------------------------------- |
-| `01-relational-databases-postgresql`       | PostgreSQL           | Relacional            | Gestión de entidades y persistencia transaccional     |
-| `02-distributed-key-value-redis`           | Redis                | Key-Value Distribuido | Telemetría en tiempo real, rankings y geolocalización |
-| `03-document-databases-mongodb`            | MongoDB              | Documental            | Almacenamiento flexible de misiones y eventos         |
-| `04-search-engines-elasticsearch`          | Elasticsearch        | Motor de Búsqueda     | Búsquedas avanzadas y análisis forense                |
-| `05-wide-column-databases-cassandra`       | Apache Cassandra     | Wide-Column           | Ingesta masiva de series temporales                   |
-| `06-message-driven-architectures-rabbitmq` | RabbitMQ             | Mensajería Asíncrona  | Desacoplamiento y procesamiento distribuido           |
+| Project                                    | Main Technology     | Paradigm              | Objective                                              |
+| ------------------------------------------ | ------------------- | --------------------- | ------------------------------------------------------ |
+| `01-relational-databases-postgresql`       | PostgreSQL          | Relational            | Entity management and transactional persistence        |
+| `02-distributed-key-value-redis`           | Redis               | Distributed Key-Value | Real-time telemetry, rankings, and geolocation         |
+| `03-document-databases-mongodb`            | MongoDB             | Document Database     | Flexible storage of missions and events                |
+| `04-search-engines-elasticsearch`          | Elasticsearch       | Search Engine         | Advanced search and forensic analysis                  |
+| `05-wide-column-databases-cassandra`       | Apache Cassandra    | Wide-Column           | Large-scale time-series ingestion                      |
+| `06-message-driven-architectures-rabbitmq` | RabbitMQ            | Asynchronous Messaging| Decoupling and distributed processing                  |
 
 ---
 
 # 01 · Relational Databases with PostgreSQL
 
-## Objetivo
+## Objective
 
-Construir la base del sistema mediante una arquitectura relacional tradicional, implementando la gestión de drones y sus operaciones básicas.
+Build the foundation of the system using a traditional relational architecture, implementing drone management and its core operations.
 
-Esta práctica introduce conceptos fundamentales como:
+This project introduces fundamental concepts such as:
 
-* Modelado relacional
-* Diseño de esquemas SQL
+* Relational modeling
+* SQL schema design
 * CRUD APIs
-* Identificadores UUID
-* Persistencia transaccional
-* Integración entre FastAPI y PostgreSQL
+* UUID identifiers
+* Transactional persistence
+* FastAPI and PostgreSQL integration
 
-## Tecnologías
+## Technologies
 
 * PostgreSQL
 * FastAPI
@@ -40,32 +40,32 @@ Esta práctica introduce conceptos fundamentales como:
 * Docker
 * Grafana
 
-## Resultado
+## Outcome
 
-Se implementa una API REST capaz de:
+A REST API is implemented with the ability to:
 
-* Registrar drones
-* Consultar información de la flota
-* Gestionar estados operativos
-* Persistir información de forma consistente
+* Register drones
+* Query fleet information
+* Manage operational states
+* Persist data consistently
 
 ---
 
 # 02 · Distributed Key-Value Systems with Redis
 
-## Objetivo
+## Objective
 
-Resolver problemas de baja latencia y alta frecuencia de escritura utilizando Redis como sistema complementario a PostgreSQL.
+Address low-latency and high-write-frequency requirements by using Redis as a complementary system to PostgreSQL.
 
-Se introducen:
+The following concepts are introduced:
 
 * Hashes
 * Sorted Sets
 * GEO Indexes
-* Cache distribuida
-* Persistencia políglota
+* Distributed caching
+* Polyglot persistence
 
-## Tecnologías
+## Technologies
 
 * Redis
 * PostgreSQL
@@ -73,91 +73,91 @@ Se introducen:
 * Docker
 * Grafana
 
-## Resultado
+## Outcome
 
-El sistema incorpora:
+The system incorporates:
 
-* Telemetría en tiempo real
-* Rankings de eficiencia
-* Consultas geoespaciales
-* Gestión híbrida SQL + Redis
+* Real-time telemetry
+* Efficiency rankings
+* Geospatial queries
+* Hybrid SQL + Redis management
 
 ---
 
 # 03 · Document Databases with MongoDB
 
-## Objetivo
+## Objective
 
-Gestionar información semi-estructurada mediante un modelo documental flexible.
+Manage semi-structured information through a flexible document-oriented model.
 
-Se aborda:
+Topics covered include:
 
-* Diseño schema-less
-* Programación asíncrona
-* Persistencia documental
-* Logs heterogéneos
-* Históricos de misiones
+* Schema-less design
+* Asynchronous programming
+* Document persistence
+* Heterogeneous logs
+* Mission history tracking
 
-## Tecnologías
+## Technologies
 
 * MongoDB
 * Motor (Async MongoDB Driver)
 * FastAPI
 * Pydantic
 
-## Resultado
+## Outcome
 
-Se desarrolla un módulo completo de gestión de misiones capaz de almacenar:
+A complete mission management module is developed, capable of storing:
 
-* Eventos de vuelo
-* Entregas
-* Inspecciones
-* Alertas
-* Telemetría especializada
+* Flight events
+* Deliveries
+* Inspections
+* Alerts
+* Specialized telemetry
 
-sin necesidad de esquemas rígidos.
+without requiring rigid schemas.
 
 ---
 
 # 04 · Search Engines with Elasticsearch
 
-## Objetivo
+## Objective
 
-Implementar capacidades avanzadas de búsqueda y análisis sobre millones de registros históricos.
+Implement advanced search and analytics capabilities over millions of historical records.
 
-Conceptos trabajados:
+Key concepts covered:
 
 * Full-text search
 * Query DSL
 * Fuzzy Search
 * Highlighting
-* Agregaciones
-* Indexación especializada
+* Aggregations
+* Specialized indexing
 
-## Tecnologías
+## Technologies
 
 * Elasticsearch
 * Kibana
 * FastAPI
 
-## Resultado
+## Outcome
 
-Se construye un sistema de análisis capaz de:
+An analytics system is built to:
 
-* Detectar incidencias
-* Buscar patrones complejos
-* Corregir errores tipográficos
-* Generar estadísticas en tiempo real
+* Detect incidents
+* Search for complex patterns
+* Correct typographical errors
+* Generate real-time statistics
 
 ---
 
 # 05 · Wide-Column Databases with Apache Cassandra
 
-## Objetivo
+## Objective
 
-Diseñar una solución capaz de soportar cargas masivas de escritura para telemetría IoT.
+Design a solution capable of handling massive write workloads for IoT telemetry.
 
-Conceptos principales:
+Core concepts:
 
 * Wide-Column Stores
 * Partition Keys
@@ -166,31 +166,31 @@ Conceptos principales:
 * Time Series Data
 * Query-Driven Modeling
 
-## Tecnologías
+## Technologies
 
 * Apache Cassandra
 * FastAPI
 * Docker
 * Grafana
 
-## Resultado
+## Outcome
 
-El sistema pasa a gestionar:
+The system evolves to manage:
 
-* Millones de eventos de telemetría
-* Históricos temporales
-* Consultas optimizadas por rango temporal
-* Escalabilidad horizontal
+* Millions of telemetry events
+* Historical time-series records
+* Optimized time-range queries
+* Horizontal scalability
 
 ---
 
 # 06 · Message-Driven Architectures with RabbitMQ
 
-## Objetivo
+## Objective
 
-Desacoplar productores y consumidores mediante una arquitectura basada en eventos y colas de mensajes.
+Decouple producers and consumers through an event-driven architecture based on message queues.
 
-Conceptos trabajados:
+Concepts covered:
 
 * Event-Driven Architecture
 * AMQP
@@ -199,9 +199,9 @@ Conceptos trabajados:
 * Exchanges
 * Routing Keys
 * Dead Letter Queues
-* Procesamiento asíncrono
+* Asynchronous processing
 
-## Tecnologías
+## Technologies
 
 * RabbitMQ
 * aio-pika
@@ -210,20 +210,20 @@ Conceptos trabajados:
 * PostgreSQL
 * FastAPI
 
-## Resultado
+## Outcome
 
-La plataforma evoluciona hacia una arquitectura distribuida donde:
+The platform evolves into a distributed architecture where:
 
-1. La API publica eventos.
-2. RabbitMQ distribuye los mensajes.
-3. Workers independientes procesan la información.
-4. Los datos se almacenan en distintos motores especializados.
+1. The API publishes events.
+2. RabbitMQ distributes the messages.
+3. Independent workers process the information.
+4. Data is stored in different specialized engines.
 
-Esto permite aumentar el rendimiento, la resiliencia y la escalabilidad del sistema.
+This approach improves system performance, resilience, and scalability.
 
 ---
 
-# Tecnologías Utilizadas
+# Technologies Used
 
 * PostgreSQL
 * Redis
@@ -236,4 +236,3 @@ Esto permite aumentar el rendimiento, la resiliencia y la escalabilidad del sist
 * Docker
 * Grafana
 * Kibana
-

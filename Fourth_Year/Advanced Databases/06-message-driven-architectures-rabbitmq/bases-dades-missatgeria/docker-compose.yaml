@@ -1,0 +1,182 @@
+services:
+  api:
+    container_name: bdda_api
+    build: .
+    command: >
+      sh -c "
+      echo 'Esperando PostgreSQL...';
+      until nc -z postgreSQL 5432; do sleep 2; done;
+      echo 'PostgreSQL listo';
+
+      echo 'Esperando Cassandra...';
+      until nc -z cassandra 9042; do sleep 2; done;
+      echo 'Cassandra lista';
+
+      yoyo list --database postgresql://postgres:postgres@postgreSQL/postgres;
+      yoyo apply --database postgresql://postgres:postgres@postgreSQL/postgres --batch;
+
+      echo 'Arrancando API...';
+      uvicorn app.main:app --host 0.0.0.0 --port 8000
+      "
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      postgreSQL:
+        condition: service_started
+      redis:
+        condition: service_started
+      cassandra:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+      DB_HOST: postgreSQL
+      DB_PORT: 5432
+      REDIS_HOST: redis
+      CASSANDRA_HOSTS: cassandra
+      RABBITMQ_HOST: rabbitmq
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: postgreSQL
+      POSTGRES_PORT: 5432
+      PYTHONPATH: .
+
+  postgreSQL:
+    image: postgres:14-alpine
+    container_name: bdda_postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: bdda_redis
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: bdda_redis_exporter
+    environment:
+      - REDIS_ADDR=redis:6379
+    ports:
+      - 9121:9121
+    depends_on:
+      - redis
+
+  cassandra:
+    image: cassandra:4.1
+    container_name: bdda_cassandra
+    ports:
+      - 9042:9042
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME=bdda_cluster
+      - CASSANDRA_DC=dc1
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+    healthcheck:
+      test: ["CMD-SHELL", "nodetool status"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: bdda_prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    depends_on:
+      - api
+      - redis-exporter
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: bdda_grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana_plugins:/var/lib/grafana/plugins
+    depends_on:
+      - postgreSQL
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_INSTALL_PLUGINS=redis-datasource
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: bdda_rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  worker:
+    container_name: bdda_worker
+    build: .
+    command: python app/worker.py
+    volumes:
+      - .:/app
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgreSQL:
+        condition: service_started
+      redis:
+        condition: service_started
+      cassandra:
+        condition: service_healthy
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+      DB_HOST: postgreSQL
+      DB_PORT: 5432
+      REDIS_HOST: redis
+      CASSANDRA_HOSTS: cassandra
+      RABBITMQ_HOST: rabbitmq
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: postgreSQL
+      POSTGRES_PORT: 5432
+      PYTHONPATH: .
+
+volumes:
+  postgres_data:
+  cassandra_data:
+  grafana_plugins:

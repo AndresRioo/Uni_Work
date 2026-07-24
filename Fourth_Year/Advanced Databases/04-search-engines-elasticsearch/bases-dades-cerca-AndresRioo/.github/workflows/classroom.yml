@@ -1,0 +1,36 @@
+name: Autograding Tests
+'on': [push, pull_request]
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: tests
+      id: tests
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: tests
+        setup-command: |
+          docker compose up -d --build
+          echo "Esperando a Elasticsearch..."
+
+          until curl -s http://localhost:9200 > /dev/null; do
+            echo "Elasticsearch no listo aún..."
+            sleep 5
+          done
+
+          echo "Elasticsearch listo"
+        command: docker exec bdda_api sh -c "pytest"
+        timeout: 10
+        max-score: 10
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TESTS_RESULTS: "${{steps.tests.outputs.result}}"
+      with:
+        runners: tests

@@ -1,0 +1,51 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana",
+        "uid": "-- Grafana --"
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "content": "<div style=\"text-align: center; padding: 50px;\">\n  <h1 style=\"font-size: 32px; margin-bottom: 20px;\">🍃 MongoDB Data Explorer</h1>\n  <p style=\"font-size: 18px; color: #ccc; margin-bottom: 30px;\">Click the button below to browse all your collections and documents in real-time.</p>\n  <a href=\"http://localhost:8081\" target=\"_blank\" style=\"background-color: #00ed64; color: #001e2b; padding: 20px 40px; text-align: center; text-decoration: none; display: inline-block; font-size: 20px; font-weight: bold; cursor: pointer; border-radius: 8px; border: none; transition: transform 0.2s;\">\n    🚀 OPEN MONGO EXPLORER\n  </a>\n  <p style=\"font-size: 14px; color: #888; margin-top: 20px;\">Credentials: admin / pass</p>\n</div>",
+        "mode": "html"
+      },
+      "title": "MongoDB Content Access",
+      "type": "text"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": ["mongodb", "explorer"],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "title": "MongoDB Simple Viewer",
+  "uid": "mongodb_performance",
+  "version": 4
+}

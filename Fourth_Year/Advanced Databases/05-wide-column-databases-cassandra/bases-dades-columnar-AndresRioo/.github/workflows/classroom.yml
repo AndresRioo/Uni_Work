@@ -1,0 +1,37 @@
+name: Autograding Tests
+'on': [push, pull_request]
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: tests
+      id: tests
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: tests
+        setup-command: |
+          docker compose up -d --build
+          echo "Esperando PostgreSQL..."
+          sleep 30
+          echo "Esperando Cassandra..."
+          sleep 20
+        command: docker exec bdda_api sh -c "pytest"
+        timeout: 10
+        max-score: 10
+    - name: Debug containers
+      run: docker ps -a
+
+    - name: Logs API
+      run: docker logs bdda_api
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TESTS_RESULTS: "${{steps.tests.outputs.result}}"
+      with:
+        runners: tests

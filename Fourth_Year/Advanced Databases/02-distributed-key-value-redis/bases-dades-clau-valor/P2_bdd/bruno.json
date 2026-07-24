@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "P2_bdd",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
